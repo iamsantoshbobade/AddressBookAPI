@@ -1,6 +1,5 @@
-/** This file contains all the constants used for this application.
- *  @author Santosh Bobade
- * 
+/** @author Santosh Bobade
+ *  This file contains all the constants used for this application.
  *  @see LICENSCE (ISC Licensce).
  */
 

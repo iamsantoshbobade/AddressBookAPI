@@ -18,13 +18,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/iamsantoshbobade/Address-Book-API.git"
+    "url": "git+https://github.com/iamsantoshbobade/AddressBookAPI.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Santosh Bobade",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/iamsantoshbobade/Address-Book-API/issues"
+    "url": "https://github.com/iamsantoshbobade/AddressBookAPI/issues"
   },
-  "homepage": "https://github.com/iamsantoshbobade/Address-Book-API#readme"
+  "homepage": "https://github.com/iamsantoshbobade/AddressBookAPI#readme"
 }
