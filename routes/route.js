@@ -31,43 +31,46 @@ var indexName = constants.DEFAULT_INDEX_NAME; //'addressbookindex';
 router.get('/', function(req, res) {
 
     //check if index already exists and create it if it does not
-    if (client.indices.exists({
+    client.indices.exists({
         index: indexName
-    })) {
-        res.status(200).send({ success: 'Successfully loaded index ' + indexName+ '  for Address Book API' }); 
-    } else {
-        let indexMapings = {
-            "mappings": {
-                "contact": {
-                    "properties": {
-                        "name": { "type": "text" },
-                        "lastname": { "type": "text" },
-                        "phone": { "type": "number"},
-                        "address": { "type": "text"},
-                        "email": { "type": "text"}
+    }, function (error, exists) {
+
+        if (exists === true) {
+            console.log('index ' + indexName+ ' already exists');
+            res.status(200).send({ success: 'Successfully loaded index ' + indexName+ '  for Address Book API' }); 
+        } else {
+            let indexMapings = {
+                "mappings": {
+                    "contact": {
+                        "properties": {
+                            "name": { "type": "text" },
+                            "lastname": { "type": "text" },
+                            "phone": { "type": "text"},
+                            "address": { "type": "text"},
+                            "email": { "type": "text"}
+                        }
                     }
                 }
             }
+            return client.indices.create({
+                index: indexName,
+                body: indexMapings
+            },
+             function(err, response){
+                    if(err){
+                        console.log(err);
+                        //failed to create index, server takes the responsibility of the failure by sending error code 500
+                        res.status(500).send({ failure: 'Failed to create index ' + indexName+ '  for Address Book API. Please try agai later!' }); 
+    
+                    }
+                    else{
+                        res.status(200).send({ success: 'Successfully created index ' + indexName+ '  for Address Book API' }); 
+                    }
+                });
         }
-        return client.indices.create({
-            index: indexName,
-            body: indexMapings
-        },
-         function(err, response){
-                if(err){
-                    console.log(err);
-                    //failed to create index, server takes the responsibility of the failure by sending error code 500
-                    res.status(500).send({ failure: 'Failed to create index ' + indexName+ '  for Address Book API. Please try agai later!' }); 
-
-                }
-                else{
-                    res.status(200).send({ success: 'Successfully created index ' + indexName+ '  for Address Book API' }); 
-                }
-            });
-    }
-
-
-});
+    });
+    
+}); // ends here
 
 /** This route supports the GET end-point of the Address Book API.
  *  It is used to retrieve the details of a contact with the given name.
@@ -100,6 +103,7 @@ router.route('/contact/:name')
                 res.status(200).send (results);
         
         });
+        
     });
 
 /**  This route supports GET end-point of the Address Book API and is used to retrieve
@@ -230,7 +234,7 @@ router.route('/contact')
               }); 
         }
     
-    });
+    }); // ends here
         
     	 
     });
@@ -263,6 +267,7 @@ router.route('/contact/:name')
      var results = resp.hits.hits.map(function(hit){
         return hit._source;
     });
+
     if (results.length == 0) {
         console.log (name + ' does not exist.');
         var msg = name + ' does not exist.';
