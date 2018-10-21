@@ -70,4 +70,4 @@ Mocha, Chai and Supertest
 		
 Here are the results for a sucessfull test run!!
 
-![Alt text](relative/path/to/img.jpg?raw=true "Title")
+![Alt text](../images?raw=true "Test Results")
