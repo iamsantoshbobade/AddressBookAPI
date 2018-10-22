@@ -129,7 +129,7 @@ function test_update_contacts () {
 		});
 
 		it('Delete Contact \'user18\' ', function(success) {
-			api.put('/contact/user18')
+			api.delete('/contact/user18')
 			.set('Accept', 'application/json')
 			.send({name: 'user18'})
 			.expect(200,success);
@@ -143,46 +143,9 @@ function test_update_contacts () {
 		});
 	});
 
-} // test_verify_contacts
+} // test_update_contacts
 
-/** Function to test the test suite for manipulating the contacts from the elasticsearch datastore.
- *  Two types of data manipulation are tested: contact name update, contact name delete
- */
-function test_update_contacts () {
-	describe ('Contact Address Book API Tests Suite #4 : Update and Delete Contacts', function () {
-		
-		//Test update contact query
-		it('Update Contact \'user10\' -> \'user18\'', function(success) {
-			api.put('/contact/user10')
-			.set('Accept', 'application/json')
-			.send({name: 'user10', newname: 'user18'})
-			.expect(200,success);
-		});
 
-		it('Update Contact \'firstname2\' -> \'firstname4\'', function(success) {
-			api.put('/contact/firstname2')
-			.set('Accept', 'application/json')
-			.send({name: 'firstname2', newname: 'firstname4'})
-			.expect(200,success);
-		});
-
-		//Test delete contact query
-		it('Delete Contact \'user18\' ', function(success) {
-			api.put('/contact/user18')
-			.set('Accept', 'application/json')
-			.send({name: 'user18'})
-			.expect(200,success);
-		});
-
-		it('Delete Contact \'firstname4\' ', function(success) {
-			api.delete('/contact/firstname4')
-			.set('Accept', 'application/json')
-			.send({name: 'firstname4'})
-			.expect(200,success);
-		});
-	});
-
-} // test_verify_contacts
 
 /** Function to test the test suite for manipulating the contacts which does not exist in
  *  the elasticsearch datastore.
@@ -202,7 +165,7 @@ function test_invalid_contacts () {
 
 		//Test delete invalid contact query
 		it('Delete Contact \'invalidUser\' ', function (failure) {
-			api.put('/contact/invalidUser')
+			api.delete('/contact/invalidUser')
 			.set('Accept', 'application/json')
 			.send({name: 'invalidUser'})
 			.expect(404,failure);

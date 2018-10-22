@@ -165,7 +165,8 @@ router.route('/contact')
                         email: input.email,
                         phone: input.phone, // if passed all the validations, use the phone no. passed in the request body to insert in the datastore
                         address: input.address
-                    }
+                    },
+                    refresh: 'true'
                 }, function (error,response) {
                     if (error)
                         res.status(500).send('Something went wrong. Failed to create contact: ' + input.name);
@@ -216,7 +217,8 @@ router.route('/contact')
                 body: { 
                    "query": { "match": { "name": name } }, 
                    "script":  "ctx._source.name =  "+ "'"+ newname +"' "+";" 
-                }
+                },
+                refresh: 'true'
              }, function (error, response) {
                   
                   if(error){
@@ -280,7 +282,8 @@ router.route('/contact/:name')
                query: {
                    match: { name: name }
                }
-            }
+            },
+            refresh: 'true'
           }, function (error, response) {
               
               if (error){
